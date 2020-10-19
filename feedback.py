@@ -7,16 +7,17 @@ from csv import reader
 
 # global vars
 __tags = [] # stores all the xpath of tags in a feedback.csv file
+__feedback_file_path = 'feedback.csv' # file path which stores all the tags
 
 # function definiton
 def getTags():
     '''
     returns __tags list if loaded elsee loaded it form file and return it
     '''
-    global __tags
+    global __tags, __feedback_file_path
     if __tags != []:
         return __tags
-    with open("feedback.csv", 'r') as f:
+    with open(__feedback_file_path, 'r') as f:
         for i in reader(f):
             __tags.append(i[0])
     return __tags
@@ -61,21 +62,26 @@ login_bt = driver.find_element_by_xpath("//*[@id=\"psslogin\"]")
 login_bt.click()
 
 sleep(6)
+# clicks on start feedback form button after waiting for 6 sec
 feedback_bt = driver.find_element_by_xpath("/html/body/div[1]/div/div/div[4]/div/div/div[7]/a/img")
 feedback_bt.click()
 
 sleep(6)
+# selects second option which is different batch for different people/student
 select_class = driver.find_element_by_xpath("//*[@id=\"classid\"]/option[2]")
 select_class.click()
+
 
 start_bt = driver.find_element_by_xpath("/html/body/div[1]/div/div[1]/div[3]/div/div[3]/div[2]/center/input")
 start_bt.click()
 
 sleep(6)
 nxt_bt = driver.find_element_by_xpath("/html/body/div[1]/div/div/center/div[1]/form[1]/div[3]/div/button")
-for i in range(15):
+number_of_subjects = 15 # this variables tells how many times same feedback has to be filled for different subjects
+for i in range(number_of_subjects):
     fill_feedback()
     nxt_bt.click()
 
+# after filling all forms clicks on the submit button 
 submit_bt = driver.find_element_by_xpath("/html/body/div[1]/div/div/center/div[1]/form[3]/div[3]/div/div/input")
 submit_bt.click()
