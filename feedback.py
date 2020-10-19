@@ -1,12 +1,18 @@
+# all imports and dependencies
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from time import sleep
 from csv import reader
 
-__tags = []
+# global vars
+__tags = [] # stores all the xpath of tags in a feedback.csv file
 
+# function definiton
 def getTags():
+    '''
+    returns __tags list if loaded elsee loaded it form file and return it
+    '''
     global __tags
     if __tags != []:
         return __tags
@@ -16,6 +22,10 @@ def getTags():
     return __tags
 
 def fill_feedback():
+    '''
+    iterates through each xpath and calls the .click() functions
+    clicks radio button for each question in feedback form
+    '''
     sleep(2)
     global driver
     tags = getTags()
@@ -27,7 +37,8 @@ def fill_feedback():
         if(i==8):
             elm.send_keys("4")
 
-
+        
+# main program starts from here
 url = 'https://gu.icloudems.com/corecampus/index.php'
 driver = webdriver.Safari()  # todo: replace .Safari with your browser make sure driver is installed
 driver.get(url)
@@ -37,12 +48,15 @@ print(driver.title)
 # todo: enter id and password of gu.icloud separated by comma
 id, pwd = "your id goes here", "your password goes here"
 
+# enters user id
 id_input = driver.find_element_by_xpath("//*[@id=\"useriid\"]")
 id_input.send_keys(id)
 
+# enters password
 pwd_input = driver.find_element_by_xpath("//*[@id=\"actlpass\"]")
 pwd_input.send_keys(pwd)
 
+# clicks on login button
 login_bt = driver.find_element_by_xpath("//*[@id=\"psslogin\"]")
 login_bt.click()
 
