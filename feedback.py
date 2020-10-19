@@ -78,7 +78,10 @@ start_bt.click()
 sleep(6)
 nxt_bt = driver.find_element_by_xpath("/html/body/div[1]/div/div/center/div[1]/form[1]/div[3]/div/button")
 number_of_subjects = 15 # this variables tells how many times same feedback has to be filled for different subjects
+i = 0
 for i in range(number_of_subjects):
+    i+=1
+    print('Filling feedback form-{}'.format(i))
     fill_feedback()
     nxt_bt.click()
 
